@@ -1,0 +1,15 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Movie Comments</title>
+</head>
+<body>
+
+{% for comment in n %}
+    <div>short reviews: {{ comment.short }}   <br>
+           stars: {{ comment.star }} <br>
+           votes:  {{ comment.vote }}  <br>
+           recommends: {{comment.recommend}}
+    </div>
+{% endfor %}
+</body>
