@@ -1,0 +1,24 @@
+
+
+<html>
+    <head>
+    </head>
+    <body>
+        <div>
+            <form class = "form" action = "{% url 'users:register'%}" method = "post">
+                {% csrf_token %}
+                {% for field in form %}
+                    {{field.label_tag}}
+                    {{field}}
+                    {{field.errors}}
+                    {% if field.help_text %}
+                        <p> {{field.help_text|safe}} </p>
+                    {% endif %}
+                {% endfor %}
+                <button class = "">注册</button>
+                <input type = "hidden" name = 'next' value = "{{next}}"/>
+            </form>
+            <a href = "{% url 'login' %}"" > 已有账号登录</a>
+        </div>
+    </body>
+</html>
