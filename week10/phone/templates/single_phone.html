@@ -1,0 +1,141 @@
+{% load static %}
+{% static "" as Base %}
+
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Highcharts Example</title>
+		<style type="text/css">
+            .highcharts-figure, .highcharts-data-table table {
+                min-width: 320px; 
+                max-width: 800px;
+                margin: 1em auto;
+            }
+            .highcharts-data-table table {
+                font-family: Verdana, sans-serif;
+                border-collapse: collapse;
+                border: 1px solid #EBEBEB;
+                margin: 10px auto;
+                text-align: center;
+                width: 100%;
+                max-width: 500px;
+            }
+            .highcharts-data-table caption {
+                padding: 1em 0;
+                font-size: 1.2em;
+                color: #555;
+            }
+            .highcharts-data-table th {
+                font-weight: 600;
+                padding: 0.5em;
+            }
+            .highcharts-data-table td, .highcharts-data-table th, .highcharts-data-table caption {
+                padding: 0.5em;
+            }
+            .highcharts-data-table thead tr, .highcharts-data-table tr:nth-child(even) {
+                background: #f8f8f8;
+            }
+            .highcharts-data-table tr:hover {
+                background: #f1f7ff;
+            }
+            input[type="number"] {
+                min-width: 50px;
+            }
+		</style>
+	</head>
+	<body>
+    <script src="{{ Base }}highcharts.js"></script>
+    <script src="{{ Base }}exporting.js"></script>
+    <script src="{{ Base }}export-data.js"></script>
+    <script src="{{ Base }}accessibility.js"></script>
+    
+    <br></br>   
+
+    <form method = "get" action = "/">
+        <button type = "submit">回首页</button>
+    </form>
+
+    <br></br>
+    <b>显示单个手机信息</b>
+    <form method="get" action="/phone/">
+        {% csrf_token %}
+        按手机名称搜索：
+        <input type="search" placeholder="手机名称" name = phone required>
+        <button type="submit">搜索</button>
+    </form>
+
+    <form method="get" action="/author/">
+        {% csrf_token %}
+        按评论人名搜索：
+        <input type="search" placeholder="评论人名" name = author required>
+        <button type="submit">搜索</button>
+    </form>
+
+    <form method="get" action="/time/">
+        {% csrf_token %}
+        按发布时间搜索：
+        <div>开始时间：</div>
+        <input type="date" name = startdate required>
+        <input type="time" name = starttime required>
+        <div>结束时间：</div>
+        <input type="date" name = enddate required>
+        <input type="time" name = endtime required>
+        <button type="submit">搜索</button>
+    </form>
+
+    {% for key, senti in sen.items %}
+        <figure class="highcharts-figure">
+            <div id="container_{{ forloop.counter }}"></div>
+            <p class="highcharts-description">
+                {{ key }}
+            </p>
+        </figure>
+        <script type="text/javascript">
+        Highcharts.chart('container_{{ forloop.counter }}', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: '每条评论情感倾向'
+            },
+            subtitle: {
+                text: ''
+            },
+            xAxis: {
+                categories: [
+                ],
+                crosshair: true
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: '情感倾向'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: [{
+                name: "{{ key }}",
+                data: {{ senti }}
+            }]
+        });
+        </script>
+    {% endfor %}
+
+    </table>
+	</body>
+</html>
