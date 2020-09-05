@@ -1,0 +1,31 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: 当前文件",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "cwd": "${fileDirname}",
+            "args": [
+                     "-ftcp",
+                     "-i14.215.177.39",
+                     "-n20",
+                     "-mproc",
+                     "-v"
+                    ]
+            // "args": [
+            //         "-fping",
+            //         "-i14.215.177.39-14.215.177.42",
+            //         ]
+            // "args": [
+            //     "-ftcp",
+            //     "-i14.215.177.39",
+            //     ]
+        }
+    ]
+}
