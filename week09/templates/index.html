@@ -1,0 +1,24 @@
+
+
+<html>
+    <head>
+    </head>
+    <body>
+        <div>
+        {% if user.is_authenticated %}
+            <p> 你已经登录， 欢迎你: <a href = '#'> {{user.username}}</a></p>
+            <button class = "" > <a href = "{% url 'logout' %}?next={{request.path}}">注销登录</a></button>
+        {% else %}
+            <p> 您还没有登录，请
+                <button class="btn btn-default"> <a href = "{% url 'login' %}?next={{request.path}}">登录</a>
+                </button>
+                或者
+                <button class="btn btn-default"> <a href = "{% url 'users:register'%}?next={{request.path}}">注册</a>
+                </button>
+            </p>
+        {% endif %}
+        {{form}}
+        </div>
+    </body>
+</html>
+
